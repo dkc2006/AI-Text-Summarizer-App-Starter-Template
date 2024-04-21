@@ -4,8 +4,6 @@ const axios = require('axios');
 
 async function summarizeText(text) {
 
-  // INSERT CODE SNIPPET FROM POSTMAN BELOW
-
   let data = JSON.stringify({
     "inputs": text,
     "parameters": {
@@ -20,21 +18,17 @@ async function summarizeText(text) {
     url: 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
     headers: { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer ' + process.env['${{secrets.ACCESS_TOKEN}}']
+      'Authorization': `Bearer ${{ secrets.ACCESS_TOKEN }}`
     },
     data : data
   };
 
-  
-    try {
-      const response = await axios.request(config);
-     return response.data[0].summary_text;
-    }
-    catch (error) {
-      console.log(error);
-    }
-
-
+  try {
+    const response = await axios.request(config);
+    return response.data[0].summary_text;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // Allows for summarizeText() to be called outside of this file
