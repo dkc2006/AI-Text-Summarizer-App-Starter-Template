@@ -1,4 +1,4 @@
-// Remove the require statement
+// Remove the require statement, as it's not needed in the browser
 // const axios = require('axios');
 
 // This is the function where the call to the API is made. Returns the summarized text as a string.
@@ -17,13 +17,12 @@ async function summarizeText(text) {
     url: 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
     headers: { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer ' + process.env['ACCESS_TOKEN']
+      'Authorization': 'Bearer ' + process.env['ACCESS_TOKEN'] // Note: process.env is not available in browser environments
     },
     data: data
   };
 
   try {
-    // Make sure axios is available globally (included via CDN in HTML)
     const response = await axios.request(config);
     return response.data[0].summary_text;
   } catch (error) {
@@ -31,6 +30,9 @@ async function summarizeText(text) {
   }
 }
 
-// Allows for summarizeText() to be called outside of this file
-// This line won't work in a browser environment, so you might need to handle it differently
-// module.exports = summarizeText;
+// Since we're not using Node.js-style modules, there's no need for module.exports
+
+// Example usage:
+// summarizeText("Your text here").then(summary => {
+//   console.log(summary);
+// });
