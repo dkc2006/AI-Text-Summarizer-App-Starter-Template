@@ -1,11 +1,8 @@
-const axios = require('axios');
+// Remove the require statement
+// const axios = require('axios');
 
 // This is the function where the call to the API is made. Returns the summarized text as a string.
-
 async function summarizeText(text) {
-
-  // INSERT CODE SNIPPET FROM POSTMAN BELOW
-
   let data = JSON.stringify({
     "inputs": text,
     "parameters": {
@@ -22,21 +19,18 @@ async function summarizeText(text) {
       'Content-Type': 'application/json', 
       'Authorization': 'Bearer ' + process.env['ACCESS_TOKEN']
     },
-    data : data
+    data: data
   };
 
-  
-    try {
-      const response = await axios.request(config);
-     return response.data[0].summary_text;
-    }
-    catch (error) {
-      console.log(error);
-    }
-
-
+  try {
+    // Make sure axios is available globally (included via CDN in HTML)
+    const response = await axios.request(config);
+    return response.data[0].summary_text;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // Allows for summarizeText() to be called outside of this file
-
-module.exports = summarizeText;
+// This line won't work in a browser environment, so you might need to handle it differently
+// module.exports = summarizeText;
