@@ -17,7 +17,7 @@ async function summarizeText(text) {
     url: 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
     headers: { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer ' + process.env['ACCESS_TOKEN'] // Note: process.env is not available in browser environments
+      'Authorization': 'Bearer ' + process.env['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'] // Note: process.env is not available in browser environments
     },
     data: data
   };
