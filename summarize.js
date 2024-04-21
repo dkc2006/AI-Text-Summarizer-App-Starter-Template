@@ -1,5 +1,11 @@
+const axios = require('axios');
+
 // This is the function where the call to the API is made. Returns the summarized text as a string.
+
 async function summarizeText(text) {
+
+  // INSERT CODE SNIPPET FROM POSTMAN BELOW
+
   let data = JSON.stringify({
     "inputs": text,
     "parameters": {
@@ -14,21 +20,23 @@ async function summarizeText(text) {
     url: 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn',
     headers: { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer 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' // Make sure to include the access token directly
+      'Authorization': 'Bearer ' + process.env['$ACCESS_TOKEN']
     },
-    data: data
+    data : data
   };
 
-  try {
-    const response = await axios.request(config);
-    return response.data[0].summary_text;
-  } catch (error) {
-    console.error(error); // Log the error for debugging
-    throw error; // Rethrow the error to handle it in the caller function
-  }
+  
+    try {
+      const response = await axios.request(config);
+     return response.data[0].summary_text;
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+
 }
 
-// Example usage:
-// summarizeText("Your text here").then(summary => {
-//   console.log(summary);
-// });
+// Allows for summarizeText() to be called outside of this file
+
+module.exports = summarizeText;
